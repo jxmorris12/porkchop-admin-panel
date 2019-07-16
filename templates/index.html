@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="text-center pt-4"> Google Cloud Instance Manager </h1>
+
+{% if success %}
+<div class="alert alert-primary">
+  <h4 class="alert-heading">Success</h4>
+  <p class="mb-0">{{ success }}</p>
+</div>
+{% endif %}
+
+
+{% if error %}
+<div class="alert alert-success">
+  <h4 class="alert-heading">Error</h4>
+  <p class="mb-0">{{ error }}</p>
+</div>
+{% endif %}
+
+{% for server in servers %}
+  {% with server=server %}
+    {% include 'server.html' %}
+  {% endwith %}
+{% endfor %}
+
+{% endblock %}

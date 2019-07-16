@@ -1,0 +1,16 @@
+{% if 'stopped' == state %}
+  {% set badgeclass = 'dark' %}
+{% elif 'running' == state %}
+  {% set badgeclass = 'success' %}
+<!-- add these later if necessary -->
+{% elif 'FAILED' == state %}
+  {% set badgeclass = 'danger' %}
+{% elif 'FINISHED' == state %}
+  {% set badgeclass = 'primary' %}
+{% else %}
+  {% set badgeclass = 'info' %}
+{% endif %}
+
+<span class="badge badge-{{badgeclass}}">
+  {{ state }}
+</span>

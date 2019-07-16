@@ -1,0 +1,16 @@
+{% if 'stopped' == server.state %}
+  <a href="/start_server/{{server.uuid}}">
+    <button type="button" class="btn btn-sm btn-outline-primary">
+      start
+    </button>
+  </a>
+{% elif 'running' == server.state %}
+  <a href="/stop_server/{{server.uuid}}">
+    <button type="button" class="btn btn-sm btn-outline-secondary">
+      stop
+    </button>
+  </a>
+{% else %}
+  <br>
+  <i>[ Cannot act until server starts. ]</i>
+{% endif %}

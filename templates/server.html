@@ -1,0 +1,23 @@
+<div class="card m-4 bg-light">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-9">
+        <h5>{{ server.name }} </h5>
+      </div>
+      <div class="col">
+        <div class="float-right">
+          {% with state=server.state %}
+            {% include 'server_state_tag.html' %}
+          {% endwith %}
+          {% with server=server %}
+            {% include 'server_toggle_button.html' %}
+          {% endwith %}
+        </div>
+      </div>
+    </div>
+    <h6 style="font-family:monospace"> {{ server.uuid }} </h6>
+    <hr>
+    <p><b>Public IPs:</b> {{ server.public_ips }} </p>
+    <p><b>Private IPs:</b> {{ server.private_ips }} </p>
+  </div>
+</div>
