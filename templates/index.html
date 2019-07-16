@@ -2,9 +2,10 @@
 {% block content %}
 
 <h1 class="text-center pt-4"> Google Cloud Instance Manager </h1>
+<hr>
 
 {% if success %}
-<div class="alert alert-primary">
+<div class="alert alert-primary m-3">
   <h4 class="alert-heading">Success</h4>
   <p class="mb-0">{{ success }}</p>
 </div>
@@ -12,7 +13,7 @@
 
 
 {% if error %}
-<div class="alert alert-success">
+<div class="alert alert-success m-3">
   <h4 class="alert-heading">Error</h4>
   <p class="mb-0">{{ error }}</p>
 </div>
@@ -23,5 +24,7 @@
     {% include 'server.html' %}
   {% endwith %}
 {% endfor %}
+
+{% include 'modal.html' %}
 
 {% endblock %}

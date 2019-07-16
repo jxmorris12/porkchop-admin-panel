@@ -27,7 +27,7 @@ def home_with_error(error_msg):
     return redirect('/?error={}'.format(error_msg))
 
 def home_with_success(success_msg):
-    return redirect('/?success={}'.format(error_msg))
+    return redirect('/?success={}'.format(success_msg))
 
 @app.route('/')
 def index():
