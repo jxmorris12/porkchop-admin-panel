@@ -11,8 +11,14 @@
 
 {% if chart_urls %}
   {% for chart_url in chart_urls %}
+  <hr>
   <div class="row m-4">
-    <div class="col-8 iframe-box">
+    <div class="col-12 text-center">
+      <a href="{{chart_url}}"> [Link]</a>
+    </div>
+  </div>
+  <div class="row m-4">
+    <div class="col-md-8 col-12 iframe-box">
       <iframe src="{{chart_url}}" scrolling="no" seamless="seamless">
       </iframe>
     </div>
@@ -21,10 +27,12 @@
 {% else %}
 <div class="row m-4">
   <div class="col text-center">
-    <h5><i>No charts found for `{{ server.name }}`.</i></h5>
+    <h5><i>No charts found for <b>{{ server.name }}</b>.</i></h5>
   </div>
 </div>
 {% endif %}
+
+<hr class="mb-4">
 
 {% include 'modal.html' %}
 
