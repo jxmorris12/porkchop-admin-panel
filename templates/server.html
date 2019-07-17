@@ -1,5 +1,5 @@
 <div class="card m-4 bg-light">
-  <div class="card-body">
+  <div class="card-body" onclick="clickIfMouseOverEnabled('{{server.uuid}}')">
     <div class="row">
       <div class="col-7">
         <h5>{{ server.name }} </h5>
@@ -21,3 +21,19 @@
     <p><b>Private IPs:</b> {{ server.private_ips }} </p>
   </div>
 </div>
+
+{% if mouseover %}
+  <!-- styles to show up if mouseover enabled -->
+  <style>
+    .card-body:hover {
+      background: #ccc;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    var clickIfMouseOverEnabled = function(uuid) {
+      location.href = '/info/' + uuid;
+    }
+  </script>
+{% endif %}

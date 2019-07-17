@@ -20,7 +20,14 @@ def get_nodes_by_uuid(uuid):
     nodes = google_cloud_driver.list_nodes()
     return [node for node in nodes if node.uuid == uuid]
 
+def load_chart_urls():
+    """ Loads a dictionary from 'charts.json' that maps instance UUIDs
+        to an array of URLs to embeddable charts for monitoring. """
+    with open('charts.json') as json_file:
+        return json.load(json_file)
+
 google_cloud_driver = load_google_cloud()
+all_chart_urls = load_chart_urls()
 app = Flask(__name__)
 
 def home_with_error(error_msg):
@@ -36,6 +43,23 @@ def index():
     success = request.args.get('success')
     return render_template('index.html', error=error, success=success, servers=servers)
 
+@app.route('/info/<uuid>')
+def info(uuid):
+    nodes = get_nodes_by_uuid(uuid)
+    if not nodes:
+        error_msg = 'Cannot get info for server with UUID {}: Not Found'.format(uuid)
+        return home_with_error(error_msg)
+    if len(nodes) != 1:
+        error_msg = 'Error getting info for server {}: {} nodes found'.format(uuid, len(nodes))
+        return home_with_error(error_msg)
+    # Display info and charts
+    try:
+        chart_urls = all_chart_urls[uuid]
+    except KeyError:
+        chart_urls = []
+    server = nodes.pop()
+    return render_template('info.html', server=server, chart_urls=chart_urls)
+
 @app.route('/start_server/<uuid>')
 def start_server(uuid):
     nodes = get_nodes_by_uuid(uuid)
@@ -43,7 +67,7 @@ def start_server(uuid):
         error_msg = 'Cannot start server with UUID {}: Not Found'.format(uuid)
         return home_with_error(error_msg)
     if len(nodes) != 1:
-        error_msg = 'Error starting server: {} nodes found'.format(len(nodes))
+        error_msg = 'Error starting server {}: {} nodes found'.format(uuid, len(nodes))
         return home_with_error(error_msg)
     node = nodes.pop()
     google_cloud_driver.ex_start_node(node)
@@ -57,7 +81,7 @@ def stop_server(uuid):
         error_msg = 'Cannot stop server with UUID {}: Not Found'.format(uuid)
         return home_with_error(error_msg)
     if len(nodes) != 1:
-        error_msg = 'Error stopping server: {} nodes found'.format(len(nodes))
+        error_msg = 'Error stopping server {}: {} nodes found'.format(uuid, len(nodes))
         return home_with_error(error_msg)
     node = nodes.pop()
     google_cloud_driver.ex_stop_node(node)

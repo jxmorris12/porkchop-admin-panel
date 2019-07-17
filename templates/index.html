@@ -5,7 +5,7 @@
 <hr>
 
 {% if success %}
-<div class="alert alert-primary m-3">
+<div class="alert alert-primary m-4">
   <h4 class="alert-heading">Success</h4>
   <p class="mb-0">{{ success }}</p>
 </div>
@@ -13,14 +13,14 @@
 
 
 {% if error %}
-<div class="alert alert-success m-3">
+<div class="alert alert-warning m-4">
   <h4 class="alert-heading">Error</h4>
   <p class="mb-0">{{ error }}</p>
 </div>
 {% endif %}
 
 {% for server in servers %}
-  {% with server=server %}
+  {% with server=server, mouseover=True %}
     {% include 'server.html' %}
   {% endwith %}
 {% endfor %}
